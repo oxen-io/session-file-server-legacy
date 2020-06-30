@@ -1,0 +1,5 @@
+[submodule "loki"]
+	path = loki
+	url = https://github.com/loki-project/session-open-group-server.git
+	branch = refactor
+
