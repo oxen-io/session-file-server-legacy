@@ -1,0 +1,29 @@
+{
+  "name": "loki-file-server",
+  "version": "2.0.0",
+  "description": "Loki file server",
+  "main": "file_server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neuroscr/loki-file-server-refactor.git"
+  },
+  "author": "Ryan Tharp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neuroscr/loki-file-server-refactor/issues"
+  },
+  "homepage": "https://github.com/neuroscr/loki-file-server-refactor#readme",
+  "dependencies": {
+    "bytebuffer": "^5.0.1",
+    "libsignal": "^2.0.1",
+    "loki-launcher": "^1.0.18",
+    "nconf": "^0.10.0",
+    "request": "^2.88.2"
+  }
+}
