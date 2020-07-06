@@ -46,11 +46,11 @@
       },
       {
         "destination": "",
-        "dialect": "../dialects/rss_proxy/dialect.loki_rss_proxy"
+        "dialect": "../../dialects/rss_proxy/dialect.loki_rss_proxy"
       },
       {
         "destination": "",
-        "dialect": "../dialects/time/dialect.loki_time"
+        "dialect": "../../dialects/time/dialect.loki_time"
       },
       {
         "destination": "",
