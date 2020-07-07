@@ -76,6 +76,11 @@
       }
     }
   },
+  "logging": {
+    "quiet": false,
+    "peridotic_reports": true,
+    "stream_logging": true
+  },
   "limits": {
     "default": {
       "following": "unlimited",
