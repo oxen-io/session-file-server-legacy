@@ -5,7 +5,8 @@ const libsignal = require('libsignal');
 const assert    = require('assert');
 const lib       = require('../lib');
 const libloki_crypt = require('../../../loki/dialects/transport/lib.loki_crypt');
-const textEncoder = new TextEncoder();
+const util       = require('util');
+const textEncoder = new util.TextEncoder();
 
 const IV_LENGTH = 16;
 
