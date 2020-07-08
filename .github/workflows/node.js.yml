@@ -20,16 +20,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
-    - name: Install requirements
-      uses: actions/setup-node@v1
-    - run: npm ci
-    - run: cd nodepomf && npm ci
-    - run: cd ../server && npm ci && cd ..
+    - run: npm ci && cd nodepomf && npm ci && cd ../server && npm ci && cd ..
     - run: npm run build --if-present
     - run: npm test
