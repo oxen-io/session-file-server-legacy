@@ -26,5 +26,8 @@
     "nconf": "^0.10.0",
     "node-fetch": "^2.6.0",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "mocha": "^7.0.0"
   }
 }
