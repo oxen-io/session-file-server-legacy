@@ -27,6 +27,7 @@ jobs:
     - name: Checkout submodules
       uses: textbook/git-checkout-submodule-action@master
     - name: Install requirements
+      uses: actions/setup-node@v1
     - run: npm ci
     - run: cd nodepomf && npm ci
     - run: cd ../server && npm ci && cd ..
