@@ -20,15 +20,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Checkout submodules
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: git submodule update --init --recursive
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: cd loki && npm ci && cd nodepomf && npm i && cd ../server && npm i
+    - run: git submodule update --init --recursive && cd loki && npm ci && cd nodepomf && npm i && cd ../server && npm i
     - run: npm run build --if-present
     - run: npm test
