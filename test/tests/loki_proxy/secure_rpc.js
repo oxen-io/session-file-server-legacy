@@ -7,6 +7,7 @@ const lib       = require('../lib');
 const libloki_crypt = require('../../../loki/dialects/transport/lib.loki_crypt');
 const util       = require('util');
 const textEncoder = new util.TextEncoder();
+const FormData    = require('form-data');
 
 const IV_LENGTH = 16;
 
@@ -244,6 +245,65 @@ module.exports = (testInfo) => {
       const str = await testSecureRpc(payloadObj, testInfo);
       assert.ok(str);
     });
+    it('secure rpc 10mb file upload', async function() {
+      const readStream = Buffer.from('0'.repeat(10 * 1024 * 1024))
+      const formData = new FormData();
+      formData.append('type', 'network.loki');
+      formData.append('content', readStream, {
+        contentType: 'text/plain',
+        name: 'content',
+        filename: 'foo.txt',
+      });
+      // formData => data => rawBody => fetchOptions.body => payloadObj.body
+      const fData = formData.getBuffer();
+      const fHeaders = formData.getHeaders();
+
+      const payloadObj = {
+        endpoint: 'files',
+        method: 'POST',
+        // don't set application/json on fup
+        body: {
+          fileUpload: fData.toString('base64')
+        },
+        headers: fHeaders
+      };
+      const json = await testSecureRpc(payloadObj, testInfo);
+      const obj = JSON.parse(json)
+      //console.log('obj', obj)
+      assert.equal(obj.meta.code, 200)
+      assert.ok(obj.data.id)
+      assert.ok(obj.data.url)
+    });
+    // testSecureRpc needs a 200 result
+    /*
+    it('secure rpc file upload too big', async function() {
+      const readStream = Buffer.from('0'.repeat(11 * 1024 * 1024))
+      const formData = new FormData();
+      formData.append('type', 'network.loki');
+      formData.append('content', readStream, {
+        contentType: 'text/plain',
+        name: 'content',
+        filename: 'foo.txt',
+      });
+      // formData => data => rawBody => fetchOptions.body => payloadObj.body
+      const fData = formData.getBuffer();
+      const fHeaders = formData.getHeaders();
+
+      const payloadObj = {
+        endpoint: 'files',
+        method: 'POST',
+        // don't set application/json on fup
+        body: {
+          fileUpload: fData.toString('base64')
+        },
+        headers: fHeaders
+      };
+      const json = await testSecureRpc(payloadObj, testInfo);
+      const obj = JSON.parse(json)
+      console.log('obj', obj)
+      assert.ok(obj.meta.code !== 200)
+    });
+    */
   });
   // FIXME: make one test change that we can swap out the transport...
   describe('onion request tests', function() {
