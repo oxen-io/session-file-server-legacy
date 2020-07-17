@@ -431,5 +431,36 @@ module.exports = (testInfo) => {
       const resp = await testLsrpc(payloadObj, testInfo);
       assert.ok(resp.body);
     });
+    it('lsrpc rpc 10mb file upload', async function() {
+      const readStream = Buffer.from('0'.repeat((10 * 1024 * 1024) - 1))
+      const formData = new FormData();
+      formData.append('type', 'network.loki');
+      formData.append('content', readStream, {
+        contentType: 'text/plain',
+        name: 'content',
+        filename: 'foo.txt',
+      });
+      // formData => data => rawBody => fetchOptions.body => payloadObj.body
+      const fData = formData.getBuffer();
+      const fHeaders = formData.getHeaders();
+
+      const payloadObj = {
+        endpoint: 'files',
+        method: 'POST',
+        // don't set application/json on fup
+        body: {
+          fileUpload: fData.toString('base64')
+        },
+        headers: fHeaders
+      };
+      const res = await testLsrpc(payloadObj, testInfo);
+      console.log('res', res)
+      assert.equal(res.status, 200)
+      const obj = JSON.parse(res.body)
+      console.log('obj', obj)
+      assert.equal(obj.meta.code, 200)
+      assert.ok(obj.data.id)
+      assert.ok(obj.data.url)
+    });
   });
 }
