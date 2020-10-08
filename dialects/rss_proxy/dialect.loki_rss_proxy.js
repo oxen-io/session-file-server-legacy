@@ -94,4 +94,24 @@ module.exports = (app, prefix) => {
       });
   });
 
+  app.get(prefix + '/loki/v1/f/:file', (req, res) => {
+    res.start = Date.now();
+    //console.log('getOpenGroupKey', safeHost);
+    let status
+    // don't allow ../
+    const safePath = req.params.file.replace(/[\.\/]/g, '');
+    fetch(`http://localhost/f/${safePath}`)
+      .then(fetchRes => {
+        status = fetchRes.status
+        return fetchRes.text()
+      })
+      .then(body => {
+        sendresponse({
+          meta: {
+            code: status
+          },
+          data: body
+        }, res);
+      });
+  });
 }
