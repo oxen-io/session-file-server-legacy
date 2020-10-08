@@ -103,15 +103,13 @@ module.exports = (app, prefix) => {
     fetch(`http://localhost/f/${safePath}`)
       .then(fetchRes => {
         status = fetchRes.status
-        return fetchRes.text()
+        return fetchRes.buffer()
       })
-      .then(body => {
-        sendresponse({
-          meta: {
-            code: status
-          },
-          data: body
-        }, res);
+      .then(buffer => {
+        //sendresponse(body, res);
+        res.type('application/octet-stream');
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.end(buffer);
       });
   });
 }
