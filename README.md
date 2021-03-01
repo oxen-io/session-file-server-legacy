@@ -17,7 +17,11 @@ cd loki
 git submodule init
 git submodule update
 npm i
-cd ..
+cd nodepomf
+npm i
+cd ../server
+npm i
+cd ../..
 # edit config.json if necessary
 npm i
 npm i -g pm2
