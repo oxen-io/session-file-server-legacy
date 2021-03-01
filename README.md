@@ -11,10 +11,14 @@ System requirements:
 
 set up instructions may look something like
 ```
-cp loki_template.ini loki.ini
-# edit loki.ini
-cp config.sample.json config.json
-# edit config.json
+git submodule init
+git submodule update
+cd loki
+git submodule init
+git submodule update
+npm i
+cd ..
+# edit config.json if necessary
 npm i
 npm i -g pm2
 pm2 start app.js --watch
