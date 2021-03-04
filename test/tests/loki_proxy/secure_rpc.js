@@ -1,13 +1,14 @@
-const fs        = require('fs');
-const crypto    = require('crypto');
-const bb        = require('bytebuffer');
-const libsignal = require('libsignal');
-const assert    = require('assert');
-const lib       = require('../lib');
-const libloki_crypt = require('../../../loki/dialects/transport/lib.loki_crypt');
-const util       = require('util');
-const textEncoder = new util.TextEncoder();
+const fs          = require('fs');
+const crypto      = require('crypto');
+const bb          = require('bytebuffer');
+const libsignal   = require('libsignal');
+const assert      = require('assert');
+const util        = require('util');
 const FormData    = require('form-data');
+const URL         = require('url');
+const lib         = require('../lib');
+const libloki_crypt = require('../../../loki/dialects/transport/lib.loki_crypt');
+const textEncoder = new util.TextEncoder();
 
 const IV_LENGTH = 16;
 
